@@ -1,0 +1,78 @@
+:root {
+  --bg-main: #0e1224;
+  --bg-card: #1a1f3a;
+  --border: #2a2f55;
+  --text-main: #ffffff;
+  --text-secondary: #d1d6ff;
+  --text-muted: #b5bbff;
+  --accent: #4f7cff;
+  --accent-pink: #ff4fd8;
+}
+
+body {
+  background: var(--bg-main);
+  color: var(--text-main);
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.navbar { background: #0e1224; }
+
+.brand-badge { display: flex; align-items: center; gap: 10px; }
+.brand-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-pink));
+  box-shadow: 0 0 12px rgba(79,124,255,.8);
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.post-title { color: #ffffff; font-weight: 700; }
+.post-caption { color: var(--text-secondary); }
+.muted { color: var(--text-muted); }
+.muted2 { color: var(--text-secondary); }
+
+/* Consistent image box */
+.post-media {
+  width: 100%;
+  height: 360px;
+  background: #0b0f1f;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.post-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.form-control {
+  background: #ffffff;
+  color: #000000;
+  border-radius: 8px;
+}
+.form-control::placeholder { color: #666666; }
+.form-control:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 .15rem rgba(79,124,255,.3);
+}
+
+.btn-outline-light { border-color: #ffffff; color: #ffffff; }
+.btn-outline-light:hover { background: #ffffff; color: #000000; }
+.btn-light { background: #ffffff; color: #000000; }
+
+.comment {
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+  margin-top: 8px;
+}
+.comment > div:first-child { color: #ffffff; }
+.comment .small { color: #d1d6ff !important; }

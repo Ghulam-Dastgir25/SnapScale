@@ -1,0 +1,168 @@
+{
+  "users": [
+    {
+      "id": "creator-1",
+      "email": "creator@snayscale.com",
+      "password": "Creator123!",
+      "role": "creator",
+      "createdAt": 0
+    },
+    {
+      "id": "qkGRLVWL9YQy-xD5rRi2U",
+      "email": "test@email.com",
+      "password": "12345",
+      "role": "consumer",
+      "createdAt": 1766165162160
+    },
+    {
+      "id": "1Ux-L0M9kFWY-HSe1ISE7",
+      "email": "test2@email.com",
+      "password": "123",
+      "role": "consumer",
+      "createdAt": 1766165226758
+    },
+    {
+      "id": "8W-MWDejg8HXialAPe1AF",
+      "email": "abc@abc.com",
+      "password": "A@a12345",
+      "role": "consumer",
+      "createdAt": 1766165449615
+    },
+    {
+      "id": "0yuEnzg_EjDvK2uo8P0bh",
+      "email": "test3@email.com",
+      "password": "Hello1234",
+      "role": "consumer",
+      "createdAt": 1766166539751
+    }
+  ],
+  "sessions": [
+    {
+      "token": "iG3_ltJognowdGsUAcuL7",
+      "userId": "creator-1",
+      "createdAt": 1766162740733
+    },
+    {
+      "token": "V9rDjsZ72wyDQjvr6-IP7",
+      "userId": "creator-1",
+      "createdAt": 1766163025981
+    },
+    {
+      "token": "lRuSd7fc6y9Y-aznwj5iO",
+      "userId": "creator-1",
+      "createdAt": 1766163074186
+    },
+    {
+      "token": "ZipA1t96Yw-_GvuYI6Tsd",
+      "userId": "creator-1",
+      "createdAt": 1766163636356
+    },
+    {
+      "token": "ftodBgz7MJloky0BRHNap",
+      "userId": "creator-1",
+      "createdAt": 1766163716482
+    },
+    {
+      "token": "Z_uVJxhiBBdfA9xQne6fk",
+      "userId": "creator-1",
+      "createdAt": 1766163754337
+    },
+    {
+      "token": "B5JsOOrb7qvR5WVU56CbX",
+      "userId": "creator-1",
+      "createdAt": 1766164157240
+    },
+    {
+      "token": "NSmGSEPV_PA1ne0OvcBh2",
+      "userId": "creator-1",
+      "createdAt": 1766164187874
+    },
+    {
+      "token": "74MfLEqUyrht41mJBiKT9",
+      "userId": "creator-1",
+      "createdAt": 1766164208367
+    },
+    {
+      "token": "-ZGaMnyNYGBAu9_6Ls8O0",
+      "userId": "creator-1",
+      "createdAt": 1766164664520
+    },
+    {
+      "token": "jZCV1TK8tvROOwnonMjB3",
+      "userId": "creator-1",
+      "createdAt": 1766164792120
+    },
+    {
+      "token": "WzxgyZ2njboXQEXWxxrt1",
+      "userId": "8W-MWDejg8HXialAPe1AF",
+      "createdAt": 1766165543139
+    },
+    {
+      "token": "Jrw5wm48wystoNUHm5j4z",
+      "userId": "0yuEnzg_EjDvK2uo8P0bh",
+      "createdAt": 1766166817581
+    },
+    {
+      "token": "6_CcvNtMFcYI59f_WJdox",
+      "userId": "8W-MWDejg8HXialAPe1AF",
+      "createdAt": 1766167034086
+    }
+  ],
+  "media": [
+    {
+      "id": "fHeIZn5MpdSOzKogDitkr",
+      "creatorId": "creator-1",
+      "title": "sfdf",
+      "caption": "fdsf",
+      "location": "asdfdadsa",
+      "people": "a,b",
+      "imageUrl": "/uploads/nUO04b_Cm44NJfbBAWqy_.jpg",
+      "createdAt": 1766165123244,
+      "comments": [
+        {
+          "id": "YxBesleUT6iXcP9MPSRHZ",
+          "userEmail": "creator@snayscale.com",
+          "text": "hello",
+          "createdAt": 1766165134062
+        },
+        {
+          "id": "WRdkdLNOI26Cwa1LH_5ku",
+          "userEmail": "test3@email.com",
+          "text": "how are you?",
+          "createdAt": 1766166827787
+        }
+      ],
+      "votes": {
+        "qkGRLVWL9YQy-xD5rRi2U": "like",
+        "8W-MWDejg8HXialAPe1AF": "like"
+      }
+    },
+    {
+      "id": "PF9d4uNam3lUkmtTdZ4O6",
+      "creatorId": "creator-1",
+      "title": "a quick brown fox jumps over the lazy dog.",
+      "caption": "ulster uni emails",
+      "location": "birmingham",
+      "people": "no one",
+      "imageUrl": "/uploads/YQVuTkpm8S3rajK448nUf.png",
+      "createdAt": 1766165531020,
+      "comments": [],
+      "votes": {
+        "8W-MWDejg8HXialAPe1AF": "like",
+        "0yuEnzg_EjDvK2uo8P0bh": "like"
+      }
+    },
+    {
+      "id": "cIsGEyld-vpHdTaqrKIGL",
+      "creatorId": "creator-1",
+      "title": "website",
+      "caption": "",
+      "location": "",
+      "people": "",
+      "imageUrl": "/uploads/gdzuhgysHqYlE5GcRCQ0w.png",
+      "createdAt": 1766166774608,
+      "comments": [],
+      "votes": {}
+    }
+  ]
+}
