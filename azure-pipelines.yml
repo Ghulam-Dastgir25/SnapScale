@@ -1,0 +1,28 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  azureSubscription: 'SnapScale-Azure-Connection'
+  appName: 'snayscale-api'
+  workingDir: 'api'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '22.x'
+  displayName: 'Use Node.js 22'
+
+- script: |
+    npm ci
+  workingDirectory: $(workingDir)
+  displayName: 'Install dependencies (api)'
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: $(azureSubscription)
+    appName: $(appName)
+    package: $(workingDir)
+  displayName: 'Deploy API to Azure App Service'
