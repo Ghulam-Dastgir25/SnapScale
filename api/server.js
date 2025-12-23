@@ -6,7 +6,8 @@ const fs = require("fs");
 const { nanoid } = require("nanoid");
 const { JSONFilePreset } = require("lowdb/node");
 
-const PORT = 7071;
+const PORT = process.env.PORT || 7071;
+
 
 const app = express();
 app.use(cors());
