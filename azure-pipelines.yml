@@ -16,13 +16,13 @@ steps:
   displayName: 'Use Node.js 22'
 
 - script: |
-    npm ci
+    npm install
   workingDirectory: $(workingDir)
-  displayName: 'Install dependencies (api)'
+  displayName: 'Install dependencies (backend)'
 
 - task: AzureWebApp@1
   inputs:
     azureSubscription: $(azureSubscription)
     appName: $(appName)
     package: $(workingDir)
-  displayName: 'Deploy API to Azure App Service'
+  displayName: 'Deploy backend to Azure App Service'
