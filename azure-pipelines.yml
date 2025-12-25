@@ -1,28 +1,40 @@
 trigger:
-- main
+  - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: "ubuntu-latest"
 
 variables:
-  azureSubscription: 'SnapScale-Azure-Connection'
-  appName: 'snayscale-api'
-  workingDir: 'api'
+  NODE_VERSION: "20.x"
+  API_DIR: "api"
+  ZIP_NAME: "api.zip"
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '22.x'
-  displayName: 'Use Node.js 22'
+  - checkout: self
+    clean: true
 
-- script: |
-    npm install
-  workingDirectory: $(workingDir)
-  displayName: 'Install dependencies (backend)'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "$(NODE_VERSION)"
+    displayName: "Use Node $(NODE_VERSION)"
 
-- task: AzureWebApp@1
-  inputs:
-    azureSubscription: $(azureSubscription)
-    appName: $(appName)
-    package: $(workingDir)
-  displayName: 'Deploy backend to Azure App Service'
+  - script: |
+      cd $(API_DIR)
+      npm ci
+    displayName: "Install API dependencies (npm ci)"
+
+  - task: ArchiveFiles@2
+    displayName: "Zip API folder for deployment"
+    inputs:
+      rootFolderOrFile: "$(System.DefaultWorkingDirectory)/$(API_DIR)"
+      includeRootFolder: false
+      archiveType: "zip"
+      archiveFile: "$(Build.ArtifactStagingDirectory)/$(ZIP_NAME)"
+      replaceExistingArchive: true
+
+  - task: AzureWebApp@1
+    displayName: "Deploy API zip to Azure Web App"
+    inputs:
+      azureSubscription: "WILL_SET_LATER"
+      appName: "snayscale-api"
+      package: "$(Build.ArtifactStagingDirectory)/$(ZIP_NAME)"
