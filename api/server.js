@@ -6,18 +6,9 @@ const fs = require("fs");
 const { nanoid } = require("nanoid");
 const { JSONFilePreset } = require("lowdb/node");
 
-// ✅ Azure uses PORT env var
+// ✅ Azure App Service sets PORT automatically
+// keep local default 7071, Azure will override with its own PORT
 const PORT = process.env.PORT || 7071;
-
-// ✅ Use writable/persistent directory on Azure Linux App Service
-// - process.env.HOME exists on Azure Linux
-// - if not, fallback to /home
-// - locally this still works fine
-const DATA_DIR =
-  process.env.SNAP_DATA_DIR ||
-  path.join(process.env.HOME || "/home", "snapscale");
-
-fs.mkdirSync(DATA_DIR, { recursive: true });
 
 const app = express();
 app.use(cors());
@@ -26,15 +17,20 @@ app.use(express.json());
 // ✅ Serve frontend from backend (one origin)
 app.use("/", express.static(path.join(__dirname, "..", "frontend")));
 
-// ✅ Uploads folder (local behavior)
+// ✅ Uploads folder (works locally and on Azure app folder; for production you’ll later move to Blob)
 const uploadsDir = path.join(__dirname, "uploads");
 fs.mkdirSync(uploadsDir, { recursive: true });
 app.use("/uploads", express.static(uploadsDir));
 
-// ✅ LowDB file moved to DATA_DIR (Azure safe)
+// ✅ LowDB must be stored in a writable persistent path on Azure Linux App Service
+// /home is writable and persists across restarts
+const DATA_DIR = path.join(process.env.HOME || "/home", "snapscale");
+fs.mkdirSync(DATA_DIR, { recursive: true });
 const dbPath = path.join(DATA_DIR, "db.json");
+
 let db;
 
+// ---------- Helpers ----------
 function ensureUploadsDir() {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
@@ -139,9 +135,7 @@ function computeVoteCounts(item) {
 }
 
 // ---------- Health ----------
-app.get("/api/health", (req, res) =>
-  res.json({ ok: true, time: Date.now() })
-);
+app.get("/api/health", (req, res) => res.json({ ok: true }));
 
 // ---------- Auth endpoints ----------
 app.post("/api/auth/register", async (req, res) => {
@@ -266,12 +260,7 @@ app.post(
 
     const counts = computeVoteCounts(item);
     res.status(201).json({
-      item: {
-        ...item,
-        likes: counts.likes,
-        dislikes: counts.dislikes,
-        myVote: null,
-      },
+      item: { ...item, likes: counts.likes, dislikes: counts.dislikes, myVote: null },
     });
   }
 );
@@ -329,10 +318,11 @@ app.post("/api/media/:id/vote", requireAuth, async (req, res) => {
   });
 });
 
-// ✅ Start after DB init + bind to 0.0.0.0 (Azure safe)
+// ✅ Start after DB init
 initDb()
   .then(() => {
-    app.listen(PORT, "0.0.0.0", () => {
+    // Azure doesn’t require 0.0.0.0 here; PORT is the key
+    app.listen(PORT, () => {
       console.log(`SnapScale API running on port ${PORT}`);
       console.log(`Health: /api/health`);
     });
