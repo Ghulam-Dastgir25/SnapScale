@@ -9,8 +9,10 @@ const { JSONFilePreset } = require("lowdb/node");
 // ✅ Azure uses PORT env var
 const PORT = process.env.PORT || 7071;
 
-// ✅ Use a writable/persistent location on Azure Linux App Service:
-// /home is writable and persists across restarts (unlike your app folder)
+// ✅ Use writable/persistent directory on Azure Linux App Service
+// - process.env.HOME exists on Azure Linux
+// - if not, fallback to /home
+// - locally this still works fine
 const DATA_DIR =
   process.env.SNAP_DATA_DIR ||
   path.join(process.env.HOME || "/home", "snapscale");
@@ -24,7 +26,7 @@ app.use(express.json());
 // ✅ Serve frontend from backend (one origin)
 app.use("/", express.static(path.join(__dirname, "..", "frontend")));
 
-// ✅ Uploads folder (keep local uploads behavior)
+// ✅ Uploads folder (local behavior)
 const uploadsDir = path.join(__dirname, "uploads");
 fs.mkdirSync(uploadsDir, { recursive: true });
 app.use("/uploads", express.static(uploadsDir));
@@ -188,7 +190,9 @@ app.post("/api/auth/login", async (req, res) => {
   }
 
   await db.read();
-  const user = db.data.users.find((u) => u.email === email && u.password === password);
+  const user = db.data.users.find(
+    (u) => u.email === email && u.password === password
+  );
   if (!user) return res.status(401).json({ error: "Invalid email or password" });
 
   const token = nanoid();
@@ -262,7 +266,12 @@ app.post(
 
     const counts = computeVoteCounts(item);
     res.status(201).json({
-      item: { ...item, likes: counts.likes, dislikes: counts.dislikes, myVote: null },
+      item: {
+        ...item,
+        likes: counts.likes,
+        dislikes: counts.dislikes,
+        myVote: null,
+      },
     });
   }
 );
